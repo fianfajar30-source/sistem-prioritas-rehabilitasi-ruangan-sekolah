@@ -1,0 +1,157 @@
+{
+  "project_name": "Max-Heap Education Resource Allocator",
+  "theme": "light",
+  "archetype": "Archetype 4: Swiss & High-Contrast",
+  "design_philosophy": {
+    "core_concept": "Editorial Tech & Data Choreography",
+    "rationale": "For an academic data structures project, the design must exude authority, clarity, and precision. We use a modular Swiss grid, rigid typography, and stark contrast to make the Max-Heap algorithm visualization feel objective and trustworthy.",
+    "key_principles": [
+      "Expose the grid skeleton (1px borders everywhere).",
+      "Typography drives the hierarchy (oversized titles, compact technical metadata).",
+      "Color is functional: Monochrome structure with Signal Red reserved strictly for the highest priority/critical state."
+    ]
+  },
+  "colors": {
+    "background": {
+      "default": "#F4F4F2",
+      "surface": "#FFFFFF",
+      "muted": "#EBEBEA"
+    },
+    "text": {
+      "primary": "#0A0A0A",
+      "secondary": "#525252",
+      "disabled": "#A3A3A3",
+      "inverse": "#FFFFFF"
+    },
+    "border": {
+      "default": "#D4D4D4",
+      "focus": "#0A0A0A"
+    },
+    "brand": {
+      "primary": "#FF3B30",
+      "primary_hover": "#D63026",
+      "accent": "#000000"
+    },
+    "semantic": {
+      "critical": "#FF3B30",
+      "warning": "#FF9500",
+      "success": "#34C759",
+      "info": "#007AFF"
+    }
+  },
+  "typography": {
+    "font_families": {
+      "heading": "'Cabinet Grotesk', sans-serif",
+      "body": "'IBM Plex Sans', sans-serif",
+      "mono": "'JetBrains Mono', monospace"
+    },
+    "scale": {
+      "h1": "text-5xl sm:text-6xl tracking-tighter font-black leading-none",
+      "h2": "text-3xl sm:text-4xl tracking-tight font-bold leading-tight",
+      "h3": "text-xl sm:text-2xl tracking-tight font-semibold",
+      "body_lg": "text-lg leading-relaxed",
+      "body": "text-base leading-relaxed",
+      "small": "text-sm uppercase tracking-[0.15em] font-medium",
+      "data": "text-sm font-mono tracking-tight"
+    }
+  },
+  "spacing_and_layout": {
+    "strategy": "The 'Control Room' Grid & Swiss Borders",
+    "container": "max-w-7xl mx-auto px-6 md:px-12",
+    "section_padding": "py-24 md:py-32",
+    "surface_treatment": "Grid Borders: Elements are divided by solid 1px borders (border-border). Zero border-radius (rounded-none) for a brutalist, academic feel. No soft shadows, only hard lines.",
+    "gap": "gap-8 lg:gap-12"
+  },
+  "components": {
+    "buttons": {
+      "primary": "rounded-none bg-accent text-inverse hover:bg-black/80 px-8 py-6 text-sm uppercase tracking-widest font-bold transition-colors",
+      "destructive": "rounded-none bg-primary text-inverse hover:bg-primary_hover px-8 py-6 text-sm uppercase tracking-widest font-bold transition-colors",
+      "outline": "rounded-none border-2 border-accent bg-transparent text-primary hover:bg-accent hover:text-inverse px-8 py-6 text-sm uppercase tracking-widest font-bold transition-all"
+    },
+    "cards": {
+      "default": "bg-surface border border-border rounded-none p-8 md:p-12",
+      "interactive": "hover:-translate-y-1 hover:border-accent transition-transform duration-300"
+    },
+    "inputs": {
+      "default": "rounded-none border-border bg-transparent focus:border-accent focus:ring-1 focus:ring-accent transition-all text-base px-4 py-6"
+    },
+    "tables": {
+      "style": "Widespread use of 1px borders. Header row uppercase, monospaced. Data cells use generous padding (py-6)."
+    }
+  },
+  "pages": {
+    "welcome": {
+      "path": "/",
+      "layout": "Grid-based split layout (CSS Grid).",
+      "sections": [
+        {
+          "name": "Hero",
+          "description": "Left column: Project Title ('Projek Struktur Data - Kelompok 10'), oversized H1. Short description of Max-Heap algorithm addressing resource allocation. Right column: The abstract geometric 3D visualization image.",
+          "interaction": "Fade-in entrance animation for text, slight parallax on image."
+        },
+        {
+          "name": "Team Roster",
+          "description": "A modular grid (3 columns) displaying the team members (Gustavolta Khizqi Ismail, M. Fajar Novyanto, Angga Farel Kusuma) with their IDs. Styled like an editorial masthead.",
+          "styling": "Top border on the section. Each name paired with a monospaced ID."
+        },
+        {
+          "name": "CTA",
+          "description": "Massive full-width section with a solid black button: 'INPUT DATA SEKOLAH'."
+        }
+      ]
+    },
+    "registration": {
+      "path": "/input",
+      "layout": "Centered constrained column (max-w-2xl).",
+      "sections": [
+        {
+          "name": "Form Container",
+          "description": "A structured, ticket-like form. Fields: Nama Sekolah, Alamat, Jumlah Siswa, Kondisi Fasilitas (Select: Rusak Berat, Sedang, Ringan), Jumlah Ruang Kelas Rusak, Jarak ke Kota (km).",
+          "styling": "Inputs stretch full width. Select dropdowns use strict square corners. Submit button spans full width, bold accent color."
+        }
+      ]
+    },
+    "results": {
+      "path": "/hasil",
+      "layout": "Data-heavy dashboard layout. Full width.",
+      "sections": [
+        {
+          "name": "Header",
+          "description": "Title: 'Prioritas Alokasi Bantuan'. Subtitle: 'Berdasarkan Perhitungan Skor Urgensi (Max-Heap)'. CTA to 'Input Data Baru'."
+        },
+        {
+          "name": "Ranking Table",
+          "description": "List of schools ranked by urgency. The top row (Rank 1, Root of Max-Heap) MUST be highlighted with a vivid background (e.g., bg-primary/10) and red text to denote critical priority. Includes a visual 'Urgency Score' badge.",
+          "styling": "Table cells divided by hard 1px borders. Monospace fonts for numbers and scores."
+        }
+      ]
+    }
+  },
+  "media_urls": {
+    "hero_image": {
+      "url": "https://static.prod-images.emergentagent.com/jobs/54718a06-8b66-47a0-8264-8137f7836d90/images/ff6e7d165ccd137945b8e159e942da700ecb03282468124ac07aa9da6cadcc9a.png",
+      "description": "Abstract geometric 3D visualization of a Max-Heap data structure with a glowing red root node. Place this on the right side of the Welcome Page hero section.",
+      "category": "hero"
+    }
+  },
+  "icons": {
+    "library": "lucide-react",
+    "usage": "Use strictly for functional UI (arrows, close buttons, chevron in selects). Do not use decorative icons. Minimalist and sharp."
+  },
+  "motion": {
+    "global": "Subtle, fast, functional. No bouncy physics.",
+    "transitions": "opacity 0.2s ease, transform 0.2s ease",
+    "page_load": "Framer motion stagger-children for the team list and results table rows."
+  },
+  "accessibility": {
+    "contrast": "All text must exceed 4.5:1 ratio against background. Pure black on off-white ensures maximum legibility.",
+    "testing": "All interactive elements must include data-testid attributes (e.g., data-testid='input-sekolah-submit-button')."
+  },
+  "instructions_to_main_agent": [
+    "Strictly follow the 'rounded-none' rule for all elements (buttons, inputs, cards) to maintain the Swiss/Brutalist aesthetic.",
+    "Use Cabinet Grotesk for all major headings. Ensure it is imported via Google Fonts or standard CDN if not local.",
+    "Use 1px borders extensively to create structure, removing the need for drop shadows.",
+    "In the Results table, mathematically map a fake 'Urgency Score' using the form inputs to demonstrate the Max-Heap concept, placing the highest score at the top.",
+    "Include 'data-testid' on all interactive elements as requested."
+  ]
+}
