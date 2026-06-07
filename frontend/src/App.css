@@ -826,3 +826,69 @@ body{
   font-weight: 900;
   color: #ff3b30;
 }
+
+.hasil-actions .btn-dark,
+.hasil-actions .btn-light {
+  height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.table {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+.table-head,
+.table-row {
+  display: grid;
+  grid-template-columns: 70px 180px 180px 100px 150px 100px 120px 100px 100px 150px 120px 140px 90px;
+  align-items: center;
+  min-width: 1500px;
+}
+
+.table-head span,
+.table-row span {
+  padding: 14px 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.table-head {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: #555;
+  text-transform: uppercase;
+}
+
+.table-row {
+  min-height: 64px;
+  border: 1px solid #d0d0d0;
+  border-bottom: none;
+  background: #f8f8f7;
+  font-size: 14px;
+}
+
+.table-row:last-child {
+  border-bottom: 1px solid #d0d0d0;
+}
+
+.table-row.top-rank {
+  background: #fff0ee;
+  border-left: 6px solid #ff3b30;
+}
+
+.table-row span:last-child {
+  font-weight: 900;
+  color: #ff3b30;
+}
+
+.hasil-note {
+  margin-top: 18px;
+  font-size: 14px;
+  color: #555;
+}

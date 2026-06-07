@@ -26,23 +26,17 @@ app = FastAPI(title="Max Heap API")
 
 api_router = APIRouter(prefix="/api")
 
-KondisiSarprasType = Literal[
-    "Baik",
-    "Kurang",
-    "Rusak Ringan",
-    "Rusak Berat"
-]
-
-KebutuhanType = Literal[
-    "Tidak Butuh",
-    "Butuh",
-    "Sangat Butuh"
-]
-
 RiwayatBantuanType = Literal[
     "Belum Pernah",
     "Pernah > 3 Tahun",
     "Pernah < 3 Tahun"
+]
+
+KondisiBangunanType = Literal[
+    "Tidak Ada Kerusakan",
+    "Rusak Ringan",
+    "Rusak Sedang",
+    "Rusak Berat"
 ]
 
 
@@ -50,11 +44,26 @@ class SekolahCreate(BaseModel):
     nama: str
     alamat: str
     jumlah_siswa: int = Field(ge=0)
-    kebutuhan_lab_ipa: KebutuhanType
-    kebutuhan_tik: KebutuhanType
-    kebutuhan_buku_perpustakaan: KebutuhanType
-    kondisi_sarpras: KondisiSarprasType
-    jarak_ke_kota: float = Field(ge=0)
+
+    nama_bangunan: str
+    tahun_pembangunan: int = Field(ge=0)
+    luas_bangunan: float = Field(ge=0)
+    jumlah_lantai: int = Field(ge=0)
+    jumlah_ruang: int = Field(ge=0)
+    kondisi_bangunan: KondisiBangunanType
+
+    jenis_prasarana: str
+    nama_ruang: str
+    panjang_ruang: float = Field(ge=0)
+    lebar_ruang: float = Field(ge=0)
+    luas_ruang: float = Field(ge=0)
+    kapasitas_ruang: int = Field(ge=0)
+
+    judul_buku_pustaka: str
+    mata_pelajaran: str
+    judul_buku: str
+    jumlah_buku: int = Field(ge=0)
+
     riwayat_bantuan: RiwayatBantuanType
 
 
@@ -64,26 +73,34 @@ class Sekolah(BaseModel):
     nama: str
     alamat: str
     jumlah_siswa: int
-    kebutuhan_lab_ipa: KebutuhanType
-    kebutuhan_tik: KebutuhanType
-    kebutuhan_buku_perpustakaan: KebutuhanType
-    kondisi_sarpras: KondisiSarprasType
-    jarak_ke_kota: float
-    riwayat_bantuan: RiwayatBantuanType
 
+    nama_bangunan: str
+    tahun_pembangunan: int
+    luas_bangunan: float
+    jumlah_lantai: int
+    jumlah_ruang: int
+    kondisi_bangunan: KondisiBangunanType
+
+    jenis_prasarana: str
+    nama_ruang: str
+    panjang_ruang: float
+    lebar_ruang: float
+    luas_ruang: float
+    kapasitas_ruang: int
+
+    judul_buku_pustaka: str
+    mata_pelajaran: str
+    judul_buku: str
+    jumlah_buku: int
+
+    riwayat_bantuan: RiwayatBantuanType
     skor_urgensi: float
 
 
-KEBUTUHAN_BOBOT = {
-    "Tidak Butuh": 0,
-    "Butuh": 60,
-    "Sangat Butuh": 100,
-}
-
-KONDISI_SARPRAS_BOBOT = {
-    "Baik": 20,
-    "Kurang": 50,
-    "Rusak Ringan": 70,
+KONDISI_BANGUNAN_BOBOT = {
+    "Tidak Ada Kerusakan": 10,
+    "Rusak Ringan": 40,
+    "Rusak Sedang": 70,
     "Rusak Berat": 100,
 }
 
@@ -95,29 +112,22 @@ RIWAYAT_BANTUAN_BOBOT = {
 
 
 def hitung_skor(data: SekolahCreate):
-
     skor_siswa = min(data.jumlah_siswa / 5, 100)
-
-    skor_lab_ipa = KEBUTUHAN_BOBOT[data.kebutuhan_lab_ipa]
-
-    skor_tik = KEBUTUHAN_BOBOT[data.kebutuhan_tik]
-
-    skor_buku = KEBUTUHAN_BOBOT[data.kebutuhan_buku_perpustakaan]
-
-    skor_kondisi = KONDISI_SARPRAS_BOBOT[data.kondisi_sarpras]
-
-    skor_jarak = min(data.jarak_ke_kota * 2, 100)
-
+    skor_kondisi = KONDISI_BANGUNAN_BOBOT[data.kondisi_bangunan]
+    skor_ruang = min(data.jumlah_ruang * 8, 100)
+    skor_luas = min(data.luas_ruang, 100)
+    skor_kapasitas = min(data.kapasitas_ruang * 3, 100)
+    skor_buku = min(data.jumlah_buku * 2, 100)
     skor_riwayat = RIWAYAT_BANTUAN_BOBOT[data.riwayat_bantuan]
 
     total = (
-        skor_siswa * 0.20
-        + skor_lab_ipa * 0.25
-        + skor_tik * 0.20
-        + skor_buku * 0.15
-        + skor_kondisi * 0.10
-        + skor_jarak * 0.05
-        + skor_riwayat * 0.05
+        skor_siswa * 0.15
+        + skor_kondisi * 0.30
+        + skor_ruang * 0.15
+        + skor_luas * 0.10
+        + skor_kapasitas * 0.10
+        + skor_buku * 0.10
+        + skor_riwayat * 0.10
     )
 
     return round(total, 2)
