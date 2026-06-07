@@ -26,16 +26,17 @@ app = FastAPI(title="Max Heap API")
 
 api_router = APIRouter(prefix="/api")
 
-KondisiType = Literal[
-    "Rusak Berat",
-    "Rusak Sedang",
-    "Rusak Ringan"
+KondisiSarprasType = Literal[
+    "Baik",
+    "Kurang",
+    "Rusak Ringan",
+    "Rusak Berat"
 ]
 
-KeamananType = Literal[
-    "Aman",
-    "Rawan",
-    "Berbahaya"
+KebutuhanType = Literal[
+    "Tidak Butuh",
+    "Butuh",
+    "Sangat Butuh"
 ]
 
 RiwayatBantuanType = Literal[
@@ -49,11 +50,13 @@ class SekolahCreate(BaseModel):
     nama: str
     alamat: str
     jumlah_siswa: int = Field(ge=0)
-    kondisi_fasilitas: KondisiType
-    jumlah_ruang_rusak: int = Field(ge=0)
+    kebutuhan_lab_ipa: KebutuhanType
+    kebutuhan_tik: KebutuhanType
+    kebutuhan_buku_perpustakaan: KebutuhanType
+    kondisi_sarpras: KondisiSarprasType
     jarak_ke_kota: float = Field(ge=0)
-    keamanan_bangunan: KeamananType
     riwayat_bantuan: RiwayatBantuanType
+
 
 class Sekolah(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -61,64 +64,60 @@ class Sekolah(BaseModel):
     nama: str
     alamat: str
     jumlah_siswa: int
-    kondisi_fasilitas: KondisiType
-    jumlah_ruang_rusak: int
+    kebutuhan_lab_ipa: KebutuhanType
+    kebutuhan_tik: KebutuhanType
+    kebutuhan_buku_perpustakaan: KebutuhanType
+    kondisi_sarpras: KondisiSarprasType
     jarak_ke_kota: float
-    keamanan_bangunan: KeamananType
     riwayat_bantuan: RiwayatBantuanType
 
     skor_urgensi: float
 
 
-KONDISI_BOBOT = {
-    "Rusak Berat": 100,
-    "Rusak Sedang": 60,
-    "Rusak Ringan": 30,
+KEBUTUHAN_BOBOT = {
+    "Tidak Butuh": 0,
+    "Butuh": 60,
+    "Sangat Butuh": 100,
 }
 
-KEAMANAN_BOBOT = {
-    "Berbahaya": 100,
-    "Rawan": 70,
-    "Aman": 20,
+KONDISI_SARPRAS_BOBOT = {
+    "Baik": 20,
+    "Kurang": 50,
+    "Rusak Ringan": 70,
+    "Rusak Berat": 100,
 }
 
 RIWAYAT_BANTUAN_BOBOT = {
     "Belum Pernah": 100,
-    "Pernah > 3 Tahun": 60,
-    "Pernah < 3 Tahun": 20,
+    "Pernah > 3 Tahun": 70,
+    "Pernah < 3 Tahun": 30,
 }
 
 
 def hitung_skor(data: SekolahCreate):
 
-    skor_kondisi = KONDISI_BOBOT[data.kondisi_fasilitas]
+    skor_siswa = min(data.jumlah_siswa / 5, 100)
 
-    skor_ruang = min(
-        data.jumlah_ruang_rusak * 8,
-        80
-    )
+    skor_lab_ipa = KEBUTUHAN_BOBOT[data.kebutuhan_lab_ipa]
 
-    skor_jarak = min(
-        data.jarak_ke_kota * 1.2,
-        60
-    )
+    skor_tik = KEBUTUHAN_BOBOT[data.kebutuhan_tik]
 
-    skor_siswa = min(
-        data.jumlah_siswa / 20,
-        50
-    )
+    skor_buku = KEBUTUHAN_BOBOT[data.kebutuhan_buku_perpustakaan]
 
-    skor_keamanan = KEAMANAN_BOBOT[data.keamanan_bangunan]
+    skor_kondisi = KONDISI_SARPRAS_BOBOT[data.kondisi_sarpras]
+
+    skor_jarak = min(data.jarak_ke_kota * 2, 100)
 
     skor_riwayat = RIWAYAT_BANTUAN_BOBOT[data.riwayat_bantuan]
 
     total = (
-        skor_kondisi * 0.30
-        + skor_ruang * 0.20
-        + skor_siswa * 0.15
-        + skor_jarak * 0.10
-        + skor_keamanan * 0.15
-        + skor_riwayat * 0.10
+        skor_siswa * 0.20
+        + skor_lab_ipa * 0.25
+        + skor_tik * 0.20
+        + skor_buku * 0.15
+        + skor_kondisi * 0.10
+        + skor_jarak * 0.05
+        + skor_riwayat * 0.05
     )
 
     return round(total, 2)
