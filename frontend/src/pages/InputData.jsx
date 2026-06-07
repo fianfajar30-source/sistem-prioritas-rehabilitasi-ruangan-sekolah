@@ -8,43 +8,44 @@ import { createSekolah } from "../lib/api";
 export default function InputData() {
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({
-  nama: "",
-  alamat: "",
-  jumlah_siswa: "",
-  kondisi_fasilitas: "",
-  jumlah_ruang_rusak: "",
-  jarak_ke_kota: "",
-  keamanan_bangunan: "",
-  riwayat_bantuan: "",
-});
+  const [formData, setFormData] = useState({
+    nama: "",
+    alamat: "",
+    jumlah_siswa: "",
+    kebutuhan_lab_ipa: "Tidak Butuh",
+    kebutuhan_tik: "Tidak Butuh",
+    kebutuhan_buku_perpustakaan: "Tidak Butuh",
+    kondisi_sarpras: "Baik",
+    jarak_ke_kota: "",
+    riwayat_bantuan: "Belum Pernah",
+  });
 
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
+    const handleChange = (e) => {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.value,
+      });
+    };
 
-  const submit = async (e) => {
-    e.preventDefault();
+    const submit = async (e) => {
+      e.preventDefault();
 
-    await createSekolah({
-      ...form,
-      jumlah_siswa: Number(form.jumlah_siswa),
-      jumlah_ruang_rusak: Number(form.jumlah_ruang_rusak),
-      jarak_ke_kota: Number(form.jarak_ke_kota),
-    });
+      await createSekolah({
+        ...formData,
+        jumlah_siswa: Number(formData.jumlah_siswa),
+        jarak_ke_kota: Number(formData.jarak_ke_kota),
+      });
 
-    navigate("/hasil");
-  };
-
+      navigate("/hasil");
+    };
   return (
     <div className="app">
       <Navbar />
 
       <main className="form-page">
-        <Link to="/" className="back-link">← KEMBALI</Link>
+        <Link to="/" className="back-link">
+          ← KEMBALI
+        </Link>
 
         <div className="page-code">/02 — REGISTRASI DATA</div>
 
@@ -54,15 +55,15 @@ export default function InputData() {
         </h1>
 
         <p>
-          Masukkan data kondisi sekolah secara akurat. Sistem akan menghitung
-          skor urgensi dan menempatkan sekolah pada posisi yang tepat dalam
-          Max-Heap.
+          Masukkan data kebutuhan sekolah sesuai indikator DAK SMP. Sistem akan
+          menghitung skor urgensi berdasarkan kebutuhan Lab IPA, TIK, buku
+          perpustakaan, kondisi sarpras, jumlah siswa, jarak, dan riwayat bantuan.
         </p>
 
         <form onSubmit={submit} className="form-box">
           <div className="form-top">
             <span>FORM INPUT-01</span>
-            <span>6 FIELDS</span>
+            <span>9 FIELDS</span>
           </div>
 
           <div className="field-row">
@@ -74,8 +75,8 @@ export default function InputData() {
             <div className="field-input">
               <input
                 name="nama"
-                placeholder="SMP 01 Lamongan"
-                value={form.nama}
+                placeholder="SDN 01 Cipanas"
+                value={formData.nama}
                 onChange={handleChange}
                 required
               />
@@ -91,8 +92,8 @@ export default function InputData() {
             <div className="field-input">
               <input
                 name="alamat"
-                placeholder="Jl. Provinsi Pantura"
-                value={form.alamat}
+                placeholder="Jl. Raya Desa Cipanas"
+                value={formData.alamat}
                 onChange={handleChange}
                 required
               />
@@ -110,7 +111,7 @@ export default function InputData() {
                 type="number"
                 name="jumlah_siswa"
                 placeholder="320"
-                value={form.jumlah_siswa}
+                value={formData.jumlah_siswa}
                 onChange={handleChange}
                 required
               />
@@ -120,20 +121,19 @@ export default function InputData() {
           <div className="field-row">
             <div className="field-label">
               <small>/04</small>
-              Kondisi
+              Kondisi Sarana Prasarana
             </div>
 
             <div className="field-input">
               <select
-                name="kondisi_fasilitas"
-                value={form.kondisi_fasilitas}
+                name="kondisi_sarpras"
+                value={formData.kondisi_sarpras}
                 onChange={handleChange}
-                required
               >
-                <option value="">Pilih Kondisi</option>
-                <option value="Rusak Berat">Rusak Berat</option>
-                <option value="Rusak Sedang">Rusak Sedang</option>
+                <option value="Baik">Baik</option>
+                <option value="Kurang">Kurang</option>
                 <option value="Rusak Ringan">Rusak Ringan</option>
+                <option value="Rusak Berat">Rusak Berat</option>
               </select>
             </div>
           </div>
@@ -141,24 +141,63 @@ export default function InputData() {
           <div className="field-row">
             <div className="field-label">
               <small>/05</small>
-              Ruang Rusak
+              Kebutuhan Lab IPA
             </div>
 
             <div className="field-input">
-              <input
-                type="number"
-                name="jumlah_ruang_rusak"
-                placeholder="9"
-                value={form.jumlah_ruang_rusak}
+              <select
+                name="kebutuhan_lab_ipa"
+                value={formData.kebutuhan_lab_ipa}
                 onChange={handleChange}
-                required
-              />
+              >
+                <option value="Tidak Butuh">Tidak Butuh</option>
+                <option value="Butuh">Butuh</option>
+                <option value="Sangat Butuh">Sangat Butuh</option>
+              </select>
             </div>
           </div>
 
           <div className="field-row">
             <div className="field-label">
               <small>/06</small>
+              Kebutuhan TIK
+            </div>
+
+            <div className="field-input">
+              <select
+                name="kebutuhan_tik"
+                value={formData.kebutuhan_tik}
+                onChange={handleChange}
+              >
+                <option value="Tidak Butuh">Tidak Butuh</option>
+                <option value="Butuh">Butuh</option>
+                <option value="Sangat Butuh">Sangat Butuh</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="field-row">
+            <div className="field-label">
+              <small>/07</small>
+              Buku Perpustakaan
+            </div>
+
+            <div className="field-input">
+              <select
+                name="kebutuhan_buku_perpustakaan"
+                value={formData.kebutuhan_buku_perpustakaan}
+                onChange={handleChange}
+              >
+                <option value="Tidak Butuh">Tidak Butuh</option>
+                <option value="Butuh">Butuh</option>
+                <option value="Sangat Butuh">Sangat Butuh</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="field-row">
+            <div className="field-label">
+              <small>/08</small>
               Jarak Kota
             </div>
 
@@ -167,53 +206,34 @@ export default function InputData() {
                 type="number"
                 name="jarak_ke_kota"
                 placeholder="18"
-                value={form.jarak_ke_kota}
+                value={formData.jarak_ke_kota}
                 onChange={handleChange}
                 required
               />
             </div>
           </div>
-                  <div className="field-row">
-          <div className="field-label">
-            <small>/07</small>
-            Keamanan
+
+          <div className="field-row">
+            <div className="field-label">
+              <small>/09</small>
+              Riwayat Bantuan
+            </div>
+
+            <div className="field-input">
+              <select
+                name="riwayat_bantuan"
+                value={formData.riwayat_bantuan}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Pilih Riwayat</option>
+                <option value="Belum Pernah">Belum Pernah</option>
+                <option value="Pernah > 3 Tahun">Pernah &gt; 3 Tahun</option>
+                <option value="Pernah < 3 Tahun">Pernah &lt; 3 Tahun</option>
+              </select>
+            </div>
           </div>
 
-          <div className="field-input">
-            <select
-              name="keamanan_bangunan"
-              value={form.keamanan_bangunan}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Pilih Keamanan</option>
-              <option value="Aman">Aman</option>
-              <option value="Rawan">Rawan</option>
-              <option value="Berbahaya">Berbahaya</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="field-row">
-          <div className="field-label">
-            <small>/08</small>
-            Riwayat Bantuan
-          </div>
-
-          <div className="field-input">
-            <select
-              name="riwayat_bantuan"
-              value={form.riwayat_bantuan}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Pilih Riwayat</option>
-              <option value="Belum Pernah">Belum Pernah</option>
-              <option value="Pernah > 3 Tahun">Pernah &gt; 3 Tahun</option>
-              <option value="Pernah < 3 Tahun">Pernah &lt; 3 Tahun</option>
-            </select>
-          </div>
-        </div>
           <button className="form-submit">
             SIMPAN DATA
           </button>

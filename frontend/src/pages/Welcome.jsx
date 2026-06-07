@@ -16,26 +16,25 @@ export default function Welcome() {
 
             <h1>
               Sistem <br />
-              Prioritas <span>Rehabilitasi</span> <br />
-              Ruangan.
+              Prioritas <span>Alokasi Sumber Daya Sekolah Menggunakan</span> <br />
+              Metode Max-Heap.
             </h1>
 
             <p>
-               Sistem Prioritas Usulan Bantuan Rehabilitasi Ruangan yang Rusak
-               Menggunakan Algoritma Max-Heap. Sistem ini membantu mengurutkan
-               sekolah berdasarkan skor urgensi, sehingga sekolah dengan situasi
-               paling mendesak berada pada prioritas teratas. Hasil sistem ini
-               bersifat rekomendasi prioritas dan bukan penentu resmi penerima
-               bantuan.
+                Sistem ini membantu mengurutkan prioritas sekolah berdasarkan kebutuhan
+                sarana pendidikan menggunakan algoritma Max-Heap. Penilaian dilakukan
+                berdasarkan jumlah siswa, kebutuhan Laboratorium IPA, kebutuhan TIK,
+                kebutuhan buku perpustakaan, kondisi sarana prasarana, jarak sekolah,
+                dan riwayat bantuan sebelumnya.
             </p>
 
             <div className="buttons">
-              <Link to="/input" className="btn-dark">
+              <Link to="input" className="btn-dark">
                 INPUT DATA SEKOLAH →
               </Link>
 
               <Link to="/hasil" className="btn-light">
-                LIHAT PRIORITAS ↗
+                LIHAT PRIORITAS →
               </Link>
             </div>
           </div>
@@ -73,9 +72,9 @@ export default function Welcome() {
 
         <section className="marquee-strip">
           <span>MAX-HEAP</span>
-          <span>REHABILITASI RUANGAN</span>
-          <span>SKOR URGENSI</span>
-          <span>PRIORITAS USULAN</span>
+          <span>DAK</span>
+          <span>SKOR PRIORITAS</span>
+          <span>ALOKASI SUMBER DAYA</span>
         </section>
 
         <section className="algorithm-section">
@@ -101,8 +100,9 @@ export default function Welcome() {
               <small>02</small>
               <h3>Skor Urgensi</h3>
               <p>
-                Skor dihitung dari beberapa faktor terbobot: kondisi fasilitas,
-                jumlah ruangan rusak, jarak ke kota, keamanan bangunan, riwayat batuan dan jumlah siswa.
+                Skor dihitung dari beberapa faktor terbobot, yaitu jumlah siswa,
+                kebutuhan Lab IPA, kebutuhan TIK, kebutuhan buku perpustakaan,
+                kondisi sarana prasarana, jarak ke kota, dan riwayat bantuan.
               </p>
             </div>
 
@@ -110,10 +110,9 @@ export default function Welcome() {
               <small>03</small>
               <h3>Root = Prioritas</h3>
               <p>
-                Root = Prioritas Tertinggi
-                Sekolah pada root heap merupakan sekolah dengan skor urgensi tertinggi. 
-                Oleh karena itu, sekolah tersebut ditempatkan sebagai urutan pertama dalam daftar prioritas usulan bantuan rehabilitasi,
-                bukan sebagai penerima bantuan yang ditentukan secara otomatis.
+                Sekolah pada posisi root heap memiliki skor prioritas tertinggi
+                berdasarkan kebutuhan sarana pendidikan dan akan muncul pertama
+                dalam daftar rekomendasi.
               </p>
             </div>
 
@@ -165,10 +164,10 @@ export default function Welcome() {
         </section>
 
         <section className="cta-section">
-          <div>/ MULAI ALOKASI</div>
+          <div>/ MULAI PRIORITAS</div>
           <h2>
-            Tentukan prioritas. <br />
-            <span>Selamatkan masa depan.</span>
+            Urutkan kebutuhan sekolah. <br />
+            <span>Dukung pemerataan pendidikan.</span>
           </h2>
 
           <Link to="/input" className="cta-button">
